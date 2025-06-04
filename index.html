@@ -29,29 +29,31 @@
 </head>
 
 <body>
-  <h1>Sound Wave Rhythm</h1>
-  <div class="controls">
-    <!-- <button onclick="startDemo()">Start Demo</button> -->
-    <div class="btn-group">
-      <button onclick="changeColor(-1)">🌈</button>
-      <input type="range" min="0" max="360" value="0" step="30" id="angle" onchange="changeColor(this.value)" />
-      <button onclick="changeColor(361)">🌟</button>
+  <header>
+    <h1>Sound Wave Rhythm</h1>
+    <div class="controls">
+      <!-- <button onclick="startDemo()">Start Demo</button> -->
+      <div class="btn-group">
+        <button onclick="changeColor(-1)">🌈</button>
+        <input type="range" min="0" max="360" value="0" step="30" id="angle" onchange="changeColor(this.value)" />
+        <button onclick="changeColor(361)">🌟</button>
+      </div>
+      <div class="btn-group">
+        <button onclick="prev()">⏮️</button>
+        <button onclick="startAudio()">▶️</button>
+        <button onclick="stopDemo()">⏹️</button>
+        <button onclick="next()">⏭️</button>
+      </div>
+      <div class="btn-group">
+        <select id="size" onchange="changeFFTSize(this.value)">
+          <option value="512">x1</option>
+          <option value="1024">x2</option>
+          <option value="2048">x3</option>
+          <option value="4096">x4</option>
+        </select>
+      </div>
     </div>
-    <div class="btn-group">
-      <button onclick="prev()">⏮️</button>
-      <button onclick="startAudio()">▶️</button>
-      <button onclick="stopDemo()">⏹️</button>
-      <button onclick="next()">⏭️</button>
-    </div>
-    <div class="btn-group">
-      <select id="size" onchange="changeFFTSize(this.value)">
-        <option value="512">x1</option>
-        <option value="1024">x2</option>
-        <option value="2048">x3</option>
-        <option value="4096">x4</option>
-      </select>
-    </div>
-  </div>
+  </header>
   <div class="canvas-container">
     <canvas id="canvas" width="1200" height="400"></canvas>
   </div>

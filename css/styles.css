@@ -12,7 +12,9 @@ body {
 }
 
 canvas {
-  border: 1px solid #111;
+  border-color: #111;
+  border-style: solid;
+  border-width: 1px 0;
   border-radius: 16px;
   display: block;
   margin: 0 auto;
@@ -23,7 +25,8 @@ h1 {
   text-align: center;
   color: #ccc;
   font-size: 1.2rem;
-  margin: 0.25rem;
+  margin: 0;
+  padding: 1rem;
 }
 
 .canvas-container {
@@ -51,8 +54,8 @@ h1 {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
-  padding: 0.5rem;
+  gap: 1rem;
+  padding: 1rem;
 }
 
 input[type=range] {
@@ -78,19 +81,27 @@ input[type=range]::before {
 }
 
 .btn-group {
-  border: 1px solid #123;
   display: flex;
   overflow: hidden;
   border-radius: 1rem;
+  padding: 1px 2px;
+  gap: 0.5rem;
 }
 
-button,
-select {
+select, button {
   border: none;
+}
+
+select {
   padding: 0.5rem 1rem;
   color: white;
   background-color: #123;
   background-image: linear-gradient(45deg, #123, #012);
+}
+button {
+  padding: 0;
+  background: none;
+  font-size: 150%;
 }
 
 .info {

@@ -8,7 +8,7 @@
   <meta itemprop="description" content="Sound Wave Rhythm, Audio Rhythm, Spectrogram, Audio Visualization, Sound Wave Animation. Grafico audio rítmico, Espectrograma, Vúmetro">
   <meta itemprop="image" content="./icon.png">
   <link rel="shortcut icon" type="image/x-icon" href="./ico.png"/>
-  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/styles.css?v=2">
   <title>Sound Wave Rhythm</title>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9132751324783100" crossorigin="anonymous"></script>
   <script type="application/ld+json">
@@ -31,21 +31,26 @@
 <body>
   <header>
     <h1>Sound Wave Rhythm</h1>
+  </header>
+  <main class="canvas-container">
+    <canvas id="canvas" width="1200" height="400"></canvas>
+  </main>
+  <footer>
     <div class="controls">
       <!-- <button onclick="startDemo()">Start Demo</button> -->
       <div class="btn-group">
-        <button onclick="changeColor(-1)">🌈</button>
-        <input type="range" min="0" max="360" value="0" step="30" id="angle" onchange="changeColor(this.value)" />
-        <button onclick="changeColor(361)">🌟</button>
+        <button onclick="changeColor(-1)" title="Set a fixed rainbow">🌈</button>
+        <input type="range" min="0" max="360" value="0" step="30" id="angle" onchange="changeColor(this.value)" title="Select the color of the bars" />
+        <button onclick="changeColor(361)" title="Set a animated rainbow">🌟</button>
       </div>
       <div class="btn-group">
-        <button onclick="prev()">⏮️</button>
-        <button onclick="startAudio()">▶️</button>
-        <button onclick="stopDemo()">⏹️</button>
-        <button onclick="next()">⏭️</button>
+        <button onclick="prev()" title="Previous animation">⏮️</button>
+        <button onclick="startAudio()" id="start-btn" title="Start/Stop animation">▶️</button>
+        <!-- <button onclick="stopDemo()">⏹️</button> -->
+        <button onclick="next()" title="Next animation">⏭️</button>
       </div>
       <div class="btn-group">
-        <select id="size" onchange="changeFFTSize(this.value)">
+        <select id="size" onchange="changeFFTSize(this.value)" title="Number of bars">
           <option value="512">x1</option>
           <option value="1024">x2</option>
           <option value="2048">x3</option>
@@ -53,10 +58,7 @@
         </select>
       </div>
     </div>
-  </header>
-  <div class="canvas-container">
-    <canvas id="canvas" width="1200" height="400"></canvas>
-  </div>
+  </footer>
   <script src="./js/animations.js"></script>
   <script src="./js/index.js"></script>
 </body>

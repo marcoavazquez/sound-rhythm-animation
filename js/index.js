@@ -1,7 +1,9 @@
+const startBtn = document.getElementById('start-btn')
+
 let gl, program, positionBuffer, colorBuffer;
 let animationId;
 let audioContext, analyser, dataArray;
-let isUsingAudio = true;
+let isUsingAudio = false;
 let current = 0;
 let fftSize = 512;
 let color = "random";
@@ -180,28 +182,41 @@ function startDemo() {
 }
 
 function stopDemo() {
+  isUsingAudio = false;
   if (animationId) {
     cancelAnimationFrame(animationId);
     animationId = null;
   }
 }
 async function startAudio() {
+  console.log('USING', isUsingAudio)
+  if (isUsingAudio) {
+    stopDemo()
+    console.log("Stopping audio...")
+    startBtn.textContent = "▶️"
+    return
+  }
   try {
+    startBtn.textContent = "⏹️"
+    console.log("Requesting microphone access...")
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const source = audioContext.createMediaStreamSource(stream);
     analyser = audioContext.createAnalyser();
     analyser.fftSize = fftSize;
     source.connect(analyser);
-    const sampleRate = audioContext.sampleRate;
-    const frequencyResolution = sampleRate / analyser.fftSize;
+    // const sampleRate = audioContext.sampleRate;
+    // const frequencyResolution = sampleRate / analyser.fftSize;
     dataArray = new Uint8Array(analyser.frequencyBinCount)
     isUsingAudio = true;
-    stopDemo();
+    // stopDemo();
     animate();
+    console.log("Started")
   } catch (err) {
+    isUsingAudio = false;
     console.error('Microphone access denied:', err);
     alert('Microphone access is required for audio visualization');
+    startBtn.textContent = "▶️"
   }
 }
 

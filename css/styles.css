@@ -60,7 +60,7 @@ h1 {
 }
 
 input[type=range] {
-  accent-color: #234;
+  accent-color: #ffffff;
   position: relative;
   padding: 0.5rem 0;
   opacity: 0.99;
@@ -78,6 +78,7 @@ input[type=range]::before {
   border-style: solid;
   border-width: 0 4px;
   border-radius: 4px;
+  opacity: 0.6;
   z-index: -1;
 }
 

@@ -189,7 +189,7 @@ function stopDemo() {
   }
 }
 async function startAudio() {
-  console.log('USING', isUsingAudio)
+  startBtn.classList.remove("start-btn-init")
   if (isUsingAudio) {
     stopDemo()
     console.log("Stopping audio...")

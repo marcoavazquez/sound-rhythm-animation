@@ -21,6 +21,7 @@ canvas {
   width: 100%;
   position: relative;
 }
+
 h1 {
   text-align: center;
   color: #ccc;
@@ -82,26 +83,29 @@ input[type=range]::before {
 
 .btn-group {
   display: flex;
-  overflow: hidden;
   border-radius: 1rem;
   padding: 1px 2px;
   gap: 0.5rem;
 }
 
-select, button {
+select,
+button {
   border: none;
 }
 
 select {
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
   color: white;
   background-color: #123;
   background-image: linear-gradient(45deg, #123, #012);
+  border-radius: 0.5rem;
 }
+
 button {
+  font-family: monospace;
   padding: 0;
   background: none;
-  font-size: 150%;
+  font-size: 200%;
 }
 
 .info {
@@ -118,29 +122,65 @@ h1 {
     text-shadow: 0 0 1rem purple;
     color: #F00;
   }
-  
+
   10% {
     text-shadow: 0 0 1rem yellow;
     color: #ff0;
   }
+
   30% {
     text-shadow: 0 0 1rem cyan;
     color: #0f0;
   }
+
   50% {
     text-shadow: 0 0 1rem purple;
     color: #0ff;
   }
+
   70% {
     text-shadow: 0 0 1rem yellow;
     color: #00f;
   }
+
   90% {
     text-shadow: 0 0 1rem cyan;
     color: #f0f;
   }
+
   100% {
     text-shadow: 0 0 1rem purple;
     color: #f00;
   }
+}
+
+.start-btn {
+  position: relative;
+}
+
+.start-btn.start-btn-init::before {
+  content: 'Click here to start';
+  display: inline-block;
+  background-color: #dadada;
+  border-radius: 3px;
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+  position: absolute;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  top: -2rem;
+  left: 50%;
+  z-index: 1;
+}
+
+.start-btn.start-btn-init::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -1rem;
+  left: calc(50% - 0.5rem);
+  width: 1rem;
+  height: 1rem;
+  background-color: #dadada;
+  transform: rotateZ(45deg);
 }

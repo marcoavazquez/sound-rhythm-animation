@@ -51,7 +51,7 @@ function hslToRgb(h, s, l) {
 }
 
 const animations = [
-  function(frequencyData, positions, colors) {
+  function (frequencyData, positions, colors) {
     const barCount = frequencyData.length;
     const barWidth = width / barCount;
     for (let i = 0; i < barCount; i++) {
@@ -159,4 +159,114 @@ const animations = [
       setColor(value, i, barCount, colors)
     }
   },
+  // Animation 6: Radial / Circular
+  function (frequencyData, positions, colors) {
+    const barCount = frequencyData.length;
+    const centerX = width / 2;
+    const centerY = height / 2;
+    const radius = Math.min(width, height) / 3; // Base radius for the circle
+
+    for (let i = 0; i < barCount; i++) {
+      const value = (frequencyData[i] / 255) || 0.001;
+      const barHeight = value * (Math.min(width, height) / 2.5); // Max height limit
+
+      // Angle for this bar
+      const angle = (i / barCount) * Math.PI * 2;
+
+      // Inner point (on the circle circumference)
+      const innerX = centerX + Math.cos(angle) * radius;
+      const innerY = centerY + Math.sin(angle) * radius;
+
+      // Outer point
+      const outerX = centerX + Math.cos(angle) * (radius + barHeight);
+      const outerY = centerY + Math.sin(angle) * (radius + barHeight);
+
+      // We need thickness, so we need perpendicular vectors
+      // Tangent angle is angle + PI/2
+      const barWidthRad = (Math.PI * 2) / barCount * 0.5; // Half width in radians
+
+      // Actually simpler to just offset the angle for the 4 corners if segments are thin
+      // Or calculate specific perp offsets.
+      // Let's use simple angular width
+
+      const angleLeft = angle - barWidthRad;
+      const angleRight = angle + barWidthRad;
+
+      // Triangle 1
+      positions.push(centerX + Math.cos(angleLeft) * radius, centerY + Math.sin(angleLeft) * radius); // Inner Left
+      positions.push(centerX + Math.cos(angleRight) * radius, centerY + Math.sin(angleRight) * radius); // Inner Right
+      positions.push(centerX + Math.cos(angleLeft) * (radius + barHeight), centerY + Math.sin(angleLeft) * (radius + barHeight)); // Outer Left
+
+      // Triangle 2
+      positions.push(centerX + Math.cos(angleRight) * radius, centerY + Math.sin(angleRight) * radius); // Inner Right
+      positions.push(centerX + Math.cos(angleRight) * (radius + barHeight), centerY + Math.sin(angleRight) * (radius + barHeight)); // Outer Right
+      positions.push(centerX + Math.cos(angleLeft) * (radius + barHeight), centerY + Math.sin(angleLeft) * (radius + barHeight)); // Outer Left
+
+      setColor(value, i, barCount, colors);
+    }
+  },
+  // Animation 7: Zipper (Alternating Top/Down)
+  function (frequencyData, positions, colors) {
+    const barCount = frequencyData.length;
+    const barWidth = width / barCount;
+
+    for (let i = 0; i < barCount; i++) {
+      const value = (frequencyData[i] / 255) || 0.001;
+      const barHeight = value * height;
+      const x = i * barWidth;
+
+      const isTop = i % 2 === 0;
+
+      let y1, y2;
+
+      if (isTop) {
+        // Grow from Top
+        y1 = height;
+        y2 = height - barHeight;
+      } else {
+        // Grow from Bottom
+        y1 = 0;
+        y2 = barHeight;
+      }
+
+      // Triangle 1
+      positions.push(x, y1);
+      positions.push(x + barWidth, y1);
+      positions.push(x, y2);
+
+      // Triangle 2
+      positions.push(x + barWidth, y1);
+      positions.push(x + barWidth, y2);
+      positions.push(x, y2);
+
+      setColor(value, i, barCount, colors)
+    }
+  },
+  // Animation 8: Horizontal Stack (Left -> Right)
+  function (frequencyData, positions, colors) {
+    const barCount = frequencyData.length;
+    const barHeight = height / barCount; // Actually this is the vertical thickness of each horizontal bar
+
+    for (let i = 0; i < barCount; i++) {
+      const value = (frequencyData[i] / 255) || 0.001;
+      const barLength = value * width; // Length horizontal
+
+      const y = i * barHeight; // Stack vertically
+      // Or maybe center it vertically? i=0 at bottom.
+
+      // x goes from 0 to barLength
+
+      // Triangle 1
+      positions.push(0, y);           // Bottom Left
+      positions.push(barLength, y);   // Bottom Right
+      positions.push(0, y + barHeight); // Top Left
+
+      // Triangle 2
+      positions.push(barLength, y);   // Bottom Right
+      positions.push(barLength, y + barHeight); // Top Right
+      positions.push(0, y + barHeight); // Top Left
+
+      setColor(value, i, barCount, colors)
+    }
+  }
 ]

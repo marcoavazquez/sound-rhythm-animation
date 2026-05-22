@@ -4,56 +4,89 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- SEO Meta Tags -->
+  <title>Sound Wave Rhythm - Interactive Audio Visualizer & Frequency Spectrogram</title>
+  <meta name="description"
+    content="Experience real-time interactive audio rhythm animations, spectrograms, and wave visualizations. Learn how the Web Audio API and Fast Fourier Transform (FFT) map microphone sound inputs to stunning visual shapes in your browser.">
+  <meta name="keywords"
+    content="audio visualizer, sound wave rhythm, real-time music animation, Web Audio API, Fast Fourier Transform, FFT spectrogram, microphone visualizer, OBS audio overlay, music rhythm visualizer, browser audio visualizer, sound physics, frequency guide, webgl audio animations, streaming audio visualizer">
+  <meta name="author" content="Sound Wave Rhythm">
+
+  <!-- Google Schema.org Structured Data -->
   <meta itemprop="name" content="Sound Wave Rhythm">
   <meta itemprop="description"
-    content="Sound Wave Rhythm, Audio Rhythm, Spectrogram, Audio Visualization, Sound Wave Animation. Grafico audio rítmico, Espectrograma, Vúmetro">
-  <meta itemprop="image" content="./icon.png">
+    content="Experience real-time interactive audio rhythm animations, spectrograms, and wave visualizations. Learn how the Web Audio API and Fast Fourier Transform (FFT) map microphone sound inputs to stunning visual shapes in your browser.">
+  <meta itemprop="image" content="./ico.png">
+
+  <!-- OpenGraph Metadata for Facebook / LinkedIn -->
+  <meta property="og:title" content="Sound Wave Rhythm - Interactive Audio Visualizer & Frequency Spectrogram">
+  <meta property="og:description"
+    content="Experience real-time interactive audio rhythm animations. Render sound waves and frequency spectrograms directly from your microphone with low latency using WebGL.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://spectro.example.com">
+  <meta property="og:image" content="./ico.png">
+
+  <!-- Twitter Card Metadata -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Sound Wave Rhythm - Interactive Audio Visualizer">
+  <meta name="twitter:description"
+    content="Experience real-time interactive audio rhythm animations. Render sound waves and frequency spectrograms directly from your microphone.">
+  <meta name="twitter:image" content="./ico.png">
+
   <link rel="shortcut icon" type="image/x-icon" href="./ico.png" />
   <link rel="stylesheet" href="./css/styles.css?v=2">
-  <title>Sound Wave Rhythm</title>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1845245270450398"
     crossorigin="anonymous"></script>
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Website",
+      "@type": "WebApplication",
       "name": "Sound Wave Rhythm",
-      "description": "Sound Wave Rhythm, Audio Rhythm, Spectrogram, Audio Visualization, Sound Wave Animation. Grafico audio rítmico, Espectrograma, Vúmetro",
-      "url": "{{ url()->current() }}",
-      "logo": "{{ asset('/images/logo-md.png') }}",
-      "contactPoint": {
-        "@type": "ContactPoint",
-        "telephone": "{{ $company->phone ?? '-   ' }}",
-        "contactType": "Customer Service"
-      }
+      "description": "Interactive WebGL audio visualizer displaying real-time frequency animations from your microphone using the HTML5 Web Audio API.",
+      "url": "https://sound-rhythm-animation.vercel.app",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "All"
     }
   </script>
 </head>
 
 <body>
-  <header>
-    <h1>Sound Wave Rhythm</h1>
+  <!-- Header / Navigation -->
+  <header class="navbar">
+    <div class="logo">
+      <a href="./index.html"><span>🎵</span> Sound Wave Rhythm</a>
+    </div>
+    <nav>
+      <a href="./index.html" class="nav-link active">Visualizer</a>
+      <a href="./privacy-policy.html" class="nav-link">Privacy Policy</a>
+    </nav>
   </header>
+
+  <h1 class="app-title">Sound Wave Rhythm</h1>
+
+  <!-- Interactive Visualizer Canvas Area -->
   <main class="canvas-container">
     <div class="instructions">
-      Play your music, click on the play ▶️ button, activate the microphone and enjoy the animation
+      Click the Play button ▶️, grant microphone access, and play your music!
     </div>
     <canvas id="canvas" width="1200" height="400"></canvas>
+    <button id="exit-fullscreen-btn" onclick="toggleFullscreen()" title="Exit Fullscreen">✕ Close Fullscreen</button>
   </main>
-  <footer>
+
+  <!-- Canvas Control Panel -->
+  <footer class="controls-panel">
     <div class="controls">
-      <!-- <button onclick="startDemo()">Start Demo</button> -->
       <div class="btn-group">
         <button onclick="changeColor(-1)" title="Set a fixed rainbow">🌈</button>
         <input type="range" min="0" max="360" value="0" step="30" id="angle" onchange="changeColor(this.value)"
           title="Select the color of the bars" />
-        <button onclick="changeColor(361)" title="Set a animated rainbow">🌟</button>
+        <button onclick="changeColor(361)" title="Set an animated rainbow">🌟</button>
       </div>
       <div class="btn-group">
         <button onclick="prev()" title="Previous animation">⏮️</button>
         <button onclick="startAudio()" id="start-btn" title="Start/Stop animation"
           class="start-btn start-btn-init">▶️</button>
-        <!-- <button onclick="stopDemo()">⏹️</button> -->
         <button onclick="next()" title="Next animation">⏭️</button>
       </div>
       <div class="btn-group">
@@ -64,8 +97,400 @@
           <option value="4096">bars x 4</option>
         </select>
       </div>
+      <div class="btn-group">
+        <button onclick="toggleFullscreen()" id="fullscreen-btn" title="Toggle Fullscreen">⛶</button>
+      </div>
     </div>
   </footer>
+
+  <!-- Educational Article & Guides (For Monetization & SEO value) -->
+  <main class="text-layout">
+    <article class="content-card">
+      <h1>Unveiling the Science of Sound: How Audio Visualization Works</h1>
+      <p>
+        Sound is all around us, but it is fundamentally invisible. Audio visualizers bridge this gap, converting
+        invisible air pressure fluctuations into mesmerizing dancing arrays of color and geometry. In <strong>Sound Wave
+          Rhythm</strong>, we leverage modern browser capabilities to capture audio inputs and transform them in
+        real-time, right inside your web browser.
+      </p>
+
+      <section>
+        <h2>1. The Physics of Sound Waves</h2>
+        <p>
+          At a physical level, sound is a mechanical wave of pressure and displacement that travels through a medium
+          like air. When a musical instrument plays or someone speaks, it vibrates the air molecules, causing
+          alternating regions of high pressure (compressions) and low pressure (rarefactions).
+        </p>
+        <p>
+          Two primary characteristics define these waves:
+        </p>
+        <ul>
+          <li><strong>Amplitude (Volume):</strong> Represented by the height of the sound wave. Higher amplitude means
+            more pressure variation, which translates to a louder volume.</li>
+          <li><strong>Frequency (Pitch):</strong> Measured in Hertz (Hz), representing the number of wave cycles
+            completed per second. Human hearing spans from roughly 20 Hz (very deep bass) up to 20,000 Hz (high-pitched
+            whistles).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>2. Real-Time Audio Capture in the Web Browser</h2>
+        <p>
+          Historically, rendering real-time audio animations on a webpage required clunky third-party plugins. Today,
+          HTML5 standardizes these processes through the <strong>Web Audio API</strong>.
+        </p>
+        <p>
+          When you click the play button, the site requests permission to access your microphone using
+          <code>navigator.mediaDevices.getUserMedia()</code>. Once granted, a microphone audio stream is initialized.
+          The Web Audio API routes this stream through an <code>AudioContext</code> and pipes it into an
+          <code>AnalyserNode</code>. This specialized node performs high-frequency calculations without interrupting the
+          audio playback or browser rendering loops.
+        </p>
+        <div class="highlight-box">
+          <strong>🔒 Privacy Guarantee:</strong> Because our visualizer utilizes local Web Audio API routing, your audio
+          is analyzed and rendered entirely locally within your browser. <strong>No microphone audio is ever saved,
+            recorded, or transmitted to external servers.</strong>
+        </div>
+      </section>
+
+      <section>
+        <h2>3. The Magic of the Fast Fourier Transform (FFT)</h2>
+        <p>
+          How do we convert a single microphone input into separate dancing bars for bass, treble, and mids? The secret
+          lies in a mathematical algorithm called the <strong>Fast Fourier Transform (FFT)</strong>.
+        </p>
+        <p>
+          When capturing sound, the raw signal is in the <i>time domain</i>—a sequence of amplitude values over time.
+          The FFT converts this time-domain signal into the <i>frequency domain</i>. It dissects the compound wave,
+          calculating how much energy is present at individual frequency bands. The resulting data is an array of
+          intensity values (from 0 to 255) for various frequencies. Our WebGL graphics pipeline then reads these
+          intensities to calculate the height and color of each rendered bar.
+        </p>
+        <p>
+          Using the dropdown in the controls panel, you can adjust the <strong>FFT size</strong>:
+        </p>
+        <ul>
+          <li><strong>512 (bars x 1):</strong> Faster analysis, offering a broader and highly reactive view.</li>
+          <li><strong>1024 to 2048 (bars x 2 / x 3):</strong> Balanced resolution, splitting the audio into finer
+            frequency bands.</li>
+          <li><strong>4096 (bars x 4):</strong> Extremely granular visualization, isolating highly specific frequencies,
+            which is perfect for complex musical arrangements.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>4. Interactive Visualization Modes Explained</h2>
+        <p>
+          Sound Wave Rhythm features multiple WebGL-powered animation algorithms. Cycle through them using the previous
+          (⏮️) and next (⏭️) buttons:
+        </p>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <h3>Symmetric Center Split</h3>
+            <p>Bars grow outward in both directions from a horizontal center axis. Great for visualizing clean,
+              symmetrical stereo tracks.</p>
+          </div>
+          <div class="feature-item">
+            <h3>Classic Vertical Spectrum</h3>
+            <p>A traditional spectrogram where bars grow upwards from the bottom, mimicking physical studio graphic
+              equalizers.</p>
+          </div>
+          <div class="feature-item">
+            <h3>Top & Bottom Spikes</h3>
+            <p>Frequencies grow from both the ceiling and floor of the display card, creating a mirrored mountain range
+              look.</p>
+          </div>
+          <div class="feature-item">
+            <h3>Solid Color Block</h3>
+            <p>A minimalist design where the entire canvas reacts in solid shifting patterns, responding to sound
+              density.</p>
+          </div>
+          <div class="feature-item">
+            <h3>Stepped Spectrum</h3>
+            <p>Adds spacing offsets to simulate blocky, retro, digital LED audio meters popular in high-end 80s hi-fi
+              equipment.</p>
+          </div>
+          <div class="feature-item">
+            <h3>Radial Circular Wave</h3>
+            <p>Wraps the frequency bars around a central circle. Heavy beats cause the circle to pulse outward in a
+              dynamic starburst pattern.</p>
+          </div>
+          <div class="feature-item">
+            <h3>Alternating Zipper</h3>
+            <p>Frequencies alternate placement between top-down and bottom-up orientations, resulting in a zipper-like
+              interaction.</p>
+          </div>
+          <div class="feature-item">
+            <h3>Horizontal Stack</h3>
+            <p>Rotates the visualizer 90 degrees, sending colored bars shooting from the left edge toward the right in a
+              side-stack.</p>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <h2>5. Smart TV Casting &amp; Home Theater Setup (For Music Listeners)</h2>
+        <p>
+          Want to elevate your house parties, active listening sessions, or ambient home environments? You can project
+          the premium neon WebGL animations of <strong>Sound Wave Rhythm</strong> onto a larger display, such as a Smart
+          TV, projector, or living room monitor, for an immersive audio-visual experience.
+        </p>
+        <p>
+          Here are the recommended setup steps to achieve the best results:
+        </p>
+        <ul>
+          <li><strong>Google Chromecast:</strong> Open Sound Wave Rhythm in Google Chrome, click the three-dot menu in
+            the upper-right corner, select <strong>Cast...</strong>, and choose your Chromecast-enabled TV or device.
+            Choose to cast either the tab or your entire desktop.</li>
+          <li><strong>Apple AirPlay:</strong> If using a Mac, iPhone, or iPad, ensure your device and Apple TV or
+            AirPlay-compatible smart TV are on the same Wi-Fi network. Open the Control Center, tap <strong>Screen
+              Mirroring</strong>, and select your TV.</li>
+          <li><strong>Pristine Sound Capture:</strong> To ensure the visualizer captures clean audio, place your
+            device's microphone near your speaker system. For a perfect 100% digital feed, check out our FAQ below on
+            using virtual cables (like Loopback or Stereo Mix) to route internal audio directly to the visualizer.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>6. Streamer Overlay Integration (OBS Studio &amp; Streamlabs)</h2>
+        <p>
+          For Twitch streamers, YouTube content creators, and live broadcasters, incorporating an active audio frequency
+          meter or sound wave overlay can significantly boost viewer engagement. You can add <strong>Sound Wave
+            Rhythm</strong> directly as a high-performance visual overlay on your stream layouts.
+        </p>
+        <p>
+          Follow these quick steps to set it up:
+        </p>
+        <ol>
+          <li>In OBS Studio or Streamlabs OBS, go to the <strong>Sources</strong> dock, click the <strong>+</strong>
+            button, and choose <strong>Browser Source</strong>.</li>
+          <li>Name the source (e.g., "Audio Visualizer") and paste the site URL:
+            <code>https://spectro.example.com</code> into the URL field.</li>
+          <li>Set the dimensions to match our high-resolution canvas ratio, such as Width: <code>1200</code> and Height:
+            <code>400</code> (or larger equivalent values depending on your canvas scale).</li>
+          <li>To show <i>only</i> the clean visualizer canvas and hide the headers, menus, panels, and text blocks,
+            paste the following code block into the <strong>Custom CSS</strong> section of the OBS Browser Source
+            properties:
+            <pre><code>.navbar, .app-title, .controls-panel, .text-layout, footer {
+  <span class="keyword">display</span>: none !important;
+}
+.canvas-container {
+  <span class="keyword">padding</span>: 0 !important;
+  <span class="keyword">margin</span>: 0 !important;
+  <span class="keyword">max-width</span>: 100% !important;
+}
+canvas {
+  <span class="keyword">border</span>: none !important;
+  <span class="keyword">border-radius</span>: 0 !important;
+}</code></pre>
+          </li>
+          <li>To make the black canvas background transparent so it overlays cleanly on top of your gameplay or camera
+            feed, add a <strong>Color Key</strong> or <strong>Chroma Key</strong> filter to the Browser Source:
+            <ul>
+              <li>Right-click the Browser Source, select <strong>Filters</strong>, click <strong>+</strong>, and add
+                <strong>Color Key</strong>.</li>
+              <li>Set Key Color Type to <i>Custom Color</i>, choose pure black (<code>#000000</code>), and adjust the
+                <i>Similarity</i> and <i>Smoothness</i> sliders until only the glowing neon bars remain.</li>
+            </ul>
+          </li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>7. Science of Audio: Musical Instrument &amp; Vocal Frequency Guide</h2>
+        <p>
+          For music production students, audio physics enthusiasts, or aspiring sound engineers, learning how physical
+          instruments map to specific audio frequencies is a fundamental skill. The table below outlines how common
+          instruments and human voices occupy different bands of the acoustic spectrum, and how they register on our
+          visualizer:
+        </p>
+        <div class="table-responsive">
+          <table>
+            <thead>
+              <tr>
+                <th>Frequency Band</th>
+                <th>Classification</th>
+                <th>Musical Elements &amp; Instruments</th>
+                <th>Visualizer Representation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>20 Hz - 60 Hz</strong></td>
+                <td>Sub-Bass</td>
+                <td>Sub-bass synthesizers, 808 kick drum fundamentals, deep pipe organ pedals. Felt rather than heard.
+                </td>
+                <td>Flashes the far-left bars of the spectrum. Triggers major pulsations in Radial Circular mode.</td>
+              </tr>
+              <tr>
+                <td><strong>60 Hz - 250 Hz</strong></td>
+                <td>Bass</td>
+                <td>Bass guitars, double bass, cello fundamentals, lower keys of a piano, deep baritone/bass vocals.
+                </td>
+                <td>Drives the primary rhythmic bounce on the left-to-middle-left portion of the screen.</td>
+              </tr>
+              <tr>
+                <td><strong>250 Hz - 2,000 Hz</strong></td>
+                <td>Midrange</td>
+                <td>Human vocals (tenor, alto, soprano), acoustic guitars, piano, snare drums, brass instruments.</td>
+                <td>Occupies the central region. This is where most vocal clarity and instrumental body resides.</td>
+              </tr>
+              <tr>
+                <td><strong>2,000 Hz - 5,000 Hz</strong></td>
+                <td>High Midrange</td>
+                <td>Electric guitar solos, upper violin strings, vocal presence, synthesizer leads, cymbal definition.
+                </td>
+                <td>Visualized in the middle-right. Determines the sharpness, definition, and presence of lead melodies.
+                </td>
+              </tr>
+              <tr>
+                <td><strong>5,000 Hz - 20,000 Hz</strong></td>
+                <td>Presence &amp; Air</td>
+                <td>Hi-hat cymbals, tambourines, high harmonic overtones, breathy sibilance in vocals, room acoustics.
+                </td>
+                <td>Dances on the far-right bars. Controls the sparkle, airiness, and high-frequency brilliance of the
+                  mix.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          Since high frequencies (above 5,000 Hz) carry less acoustic energy than bass frequencies, you will notice that
+          the far-right bars are more subtle, reacting to sharp sounds like hand claps, finger snaps, cymbals, or vocal
+          "s" sounds.
+        </p>
+      </section>
+
+      <section>
+        <h2>8. Web Developer Tutorial: How to Code an Audio Visualizer</h2>
+        <p>
+          Are you a web developer, student, or designer who wants to build interactive web audio toys? Modern web
+          browsers provide native support for capturing and parsing microphone input via the <strong>HTML5 Web Audio
+            API</strong> and rendering graphics with the <strong>Canvas API</strong> or <strong>WebGL</strong>.
+        </p>
+        <p>
+          Below is a complete, step-by-step developer guide and boilerplate JavaScript code to establish a real-time
+          microphone visualizer on a standard 2D canvas context:
+        </p>
+
+        <ol>
+          <li><strong>Initialize the Audio Graph:</strong> Create an <code>AudioContext</code> to manage audio
+            operations. Then, create an <code>AnalyserNode</code>, which is a specialized processor that performs Fast
+            Fourier Transform (FFT) computations.</li>
+          <li><strong>Request Microphone Permissions:</strong> Use <code>navigator.mediaDevices.getUserMedia()</code> to
+            request system audio access. Once approved, convert the system audio stream into a source node and connect
+            it directly to your analyser.</li>
+          <li><strong>Create the Animation Loop:</strong> Set up a continuous render loop using
+            <code>requestAnimationFrame()</code>. In every frame, fetch the fresh byte frequency data using
+            <code>analyser.getByteFrequencyData()</code>.</li>
+          <li><strong>Draw on the Canvas:</strong> Clear the canvas, loop through the frequency array, calculate
+            coordinate offsets, and draw matching bars.</li>
+        </ol>
+
+        <pre><code><span class="comment">// 1. Initialize Audio Context &amp; Analyser Node</span>
+<span class="keyword">const</span> audioCtx = <span class="keyword">new</span> (<span class="builtin">window</span>.AudioContext || <span class="builtin">window</span>.webkitAudioContext)();
+<span class="keyword">const</span> analyserNode = audioCtx.createAnalyser();
+analyserNode.fftSize = <span class="number">512</span>; <span class="comment">// Determines frequency bar resolution (must be power of 2)</span>
+
+<span class="comment">// 2. Request System/Microphone Access</span>
+<span class="builtin">navigator</span>.mediaDevices.getUserMedia({ audio: <span class="keyword">true</span> })
+  .then(stream =&gt; {
+    <span class="comment">// Route microphone input into the Web Audio API graph</span>
+    <span class="keyword">const</span> source = audioCtx.createMediaStreamSource(stream);
+    source.connect(analyserNode);
+    
+    <span class="comment">// Kick off the WebGL/Canvas rendering loop</span>
+    renderLoop();
+  })
+  .catch(err =&gt; <span class="builtin">console</span>.error(<span class="string">"Microphone authorization failed:"</span>, err));
+
+<span class="comment">// 3. Establish the Canvas Rendering Pipeline</span>
+<span class="keyword">const</span> canvas = <span class="builtin">document</span>.getElementById(<span class="string">"visualizer-canvas"</span>);
+<span class="keyword">const</span> ctx = canvas.getContext(<span class="string">"2d"</span>);
+<span class="keyword">const</span> bufferLength = analyserNode.frequencyBinCount; <span class="comment">// Equal to fftSize / 2</span>
+<span class="keyword">const</span> frequencyData = <span class="keyword">new</span> <span class="builtin">Uint8Array</span>(bufferLength);
+
+<span class="keyword">function</span> <span class="function">renderLoop</span>() {
+  <span class="comment">// Schedule the next redraw at the screen's refresh rate</span>
+  requestAnimationFrame(renderLoop);
+  
+  <span class="comment">// Populate frequencyData array with current audio values (0 - 255)</span>
+  analyserNode.getByteFrequencyData(frequencyData);
+  
+  <span class="comment">// Clear canvas with solid black before drawing the new frame</span>
+  ctx.fillStyle = <span class="string">"#000000"</span>;
+  ctx.fillRect(<span class="number">0</span>, <span class="number">0</span>, canvas.width, canvas.height);
+  
+  <span class="keyword">const</span> barWidth = (canvas.width / bufferLength) * <span class="number">1.5</span>;
+  <span class="keyword">let</span> drawX = <span class="number">0</span>;
+  
+  <span class="comment">// Draw a rectangle representing each frequency bin</span>
+  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; bufferLength; i++) {
+    <span class="keyword">const</span> value = frequencyData[i];
+    <span class="keyword">const</span> percent = value / <span class="number">255</span>;
+    <span class="keyword">const</span> barHeight = canvas.height * percent;
+    
+    <span class="comment">// Generate shifting color gradients based on bar position</span>
+    <span class="keyword">const</span> hue = (i / bufferLength) * <span class="number">360</span>;
+    ctx.fillStyle = <span class="string">`hsl(${hue}, 100%, 50%)`</span>;
+    
+    <span class="comment">// Draw bar growing from the bottom up</span>
+    ctx.fillRect(drawX, canvas.height - barHeight, barWidth - <span class="number">1</span>, barHeight);
+    
+    drawX += barWidth;
+  }
+}</code></pre>
+      </section>
+
+      <section>
+        <h2>9. Frequently Asked Questions (FAQ)</h2>
+        <div class="faq-list">
+          <div class="faq-item">
+            <div class="faq-question">Why is the visualizer not moving after clicking play?</div>
+            <div class="faq-answer">
+              Ensure you have granted microphone permissions in your browser settings. If permissions were previously
+              blocked, click the lock or settings icon next to your URL bar to reset the microphone access permission.
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">Can I visualize system music or streaming apps?</div>
+            <div class="faq-answer">
+              Yes! To visualize computer audio (Spotify, YouTube, etc.) instead of room noise, you can configure your
+              browser's microphone input to capture "Stereo Mix" or "What U Hear" in your OS sound settings. Mac users
+              can achieve this using virtual audio interfaces like BlackHole or Loopback.
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">How do the color control options work?</div>
+            <div class="faq-answer">
+              You can set static colors or dynamic color shifts. The rainbow emoji button (🌈) locks the color
+              distribution across the bars, the slider (0-360) sets a solid custom color, and the star emoji button (🌟)
+              activates a cycling, randomized rainbow pattern.
+            </div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question">Does this tool work on mobile devices?</div>
+            <div class="faq-answer">
+              Absolutely. Sound Wave Rhythm is built with mobile responsiveness in mind. It works seamlessly on iOS
+              Safari, Android Chrome, and other modern mobile web browsers.
+            </div>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2026 Sound Wave Rhythm. Built with WebGL & HTML5 Web Audio API.</p>
+      <div class="footer-links">
+        <a href="./index.html">Visualizer</a>
+        <a href="./privacy-policy.html">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
+
   <script src="./js/animations.js"></script>
   <script src="./js/index.js"></script>
 </body>

@@ -8,8 +8,8 @@ let current = 0;
 let fftSize = 512;
 let color = "random";
 const canvas = document.getElementById('canvas');
-const width = canvas.width;
-const height = canvas.height;
+let width = canvas.width;
+let height = canvas.height;
 // Vertex shader
 const vertexShaderSource = `
             attribute vec2 a_position;
@@ -226,3 +226,37 @@ window.onload = function () {
     startDemo();
   }
 };
+
+// Fullscreen handling
+function toggleFullscreen() {
+  const container = document.querySelector('.canvas-container');
+  if (!document.fullscreenElement) {
+    container.requestFullscreen().catch(err => {
+      console.error(`Error attempting to enable fullscreen: ${err.message}`);
+    });
+  } else {
+    document.exitFullscreen();
+  }
+}
+
+document.addEventListener('fullscreenchange', () => {
+  if (document.fullscreenElement) {
+    // Save original dimensions
+    canvas.dataset.originalWidth = canvas.width;
+    canvas.dataset.originalHeight = canvas.height;
+
+    // Resize to screen dimensions
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    width = canvas.width;
+    height = canvas.height;
+    gl.viewport(0, 0, canvas.width, canvas.height);
+  } else {
+    // Restore original dimensions
+    canvas.width = parseInt(canvas.dataset.originalWidth) || 1200;
+    canvas.height = parseInt(canvas.dataset.originalHeight) || 400;
+    width = canvas.width;
+    height = canvas.height;
+    gl.viewport(0, 0, canvas.width, canvas.height);
+  }
+});
